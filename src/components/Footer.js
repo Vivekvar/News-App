@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 export class Footer extends Component {
+
     myStyle = {
         color:"white",
         backgroundColor:"#212529",
@@ -9,6 +10,7 @@ export class Footer extends Component {
         bottom:"0",
         borderTop:"2px solid black"
     }
+
     render() {
         return (
             <div className="d-flex justify-content-center footer mt-5" style={this.myStyle}>
@@ -23,6 +25,7 @@ export class Footer extends Component {
             </div>
         )
     }
+    
 }
 
 export default Footer
