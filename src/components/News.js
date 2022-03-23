@@ -23,8 +23,8 @@ export class News extends Component {
         }
     }
 
-    async componentDidMount() {
-        let url = `https://newsapi.org/v2/top-headlines?country=in&category=${this.props.category}&apiKey=6b52f123cfbd48a59fbee8dcff4cd78c&page=${this.state.page}&pageSize=${this.state.pageSize}`;
+    async updatePage() {
+        const url = `https://newsapi.org/v2/top-headlines?country=in&category=${this.props.category}&apiKey=6b52f123cfbd48a59fbee8dcff4cd78c&page=${this.state.page}&pageSize=${this.state.pageSize}`;
         this.setState({
             loading: true
         })
@@ -37,32 +37,22 @@ export class News extends Component {
         })
     }
 
+    async componentDidMount() {
+        await this.updatePage();
+    }
+
     handlePrevious = async () => {
-        let url = `https://newsapi.org/v2/top-headlines?country=in&category=${this.props.category}&apiKey=6b52f123cfbd48a59fbee8dcff4cd78c&page=${this.state.page - 1}&pageSize=${this.state.pageSize}`;
-        this.setState({
-            loading: true
+        await this.setState({
+            page: this.state.page - 1
         })
-        let data = await fetch(url);
-        let parsedData = await data.json();
-        this.setState({
-            articles: parsedData.articles,
-            page: this.state.page - 1,
-            loading: false
-        })
+        await this.updatePage();
     }
 
     handleNext = async () => {
-        let url = `https://newsapi.org/v2/top-headlines?country=in&category=${this.props.category}&apiKey=6b52f123cfbd48a59fbee8dcff4cd78c&page=${this.state.page + 1}&pageSize=${this.state.pageSize}`;
-        this.setState({
-            loading: true
+        await this.setState({
+            page: this.state.page + 1
         })
-        let data = await fetch(url);
-        let parsedData = await data.json();
-        this.setState({
-            articles: parsedData.articles,
-            page: this.state.page + 1,
-            loading: false
-        })
+        await this.updatePage();
     }
 
     render() {
@@ -71,7 +61,10 @@ export class News extends Component {
                 <h1 className="text-center my-3">News App - Today's Top Headlines</h1>
                 {this.state.loading && <Spinner />}
                 <div className="row">
-                    {!this.state.loading && this.state.articles.map((article) => {
+                    {!this.state.loading && this.state.articles.filter((article) => {
+                        let title = article.title.toLowerCase(), query = this.props.searchQuery.toLowerCase();
+                        return title.includes(query);
+                    }).map((article) => {
                         return <div className="col-md-4 my-3" key={article.url}>
                             <NewsItem 
                                 title={article.title?article.title.slice(0, 40):""} 
