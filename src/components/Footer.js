@@ -8,7 +8,7 @@ export class Footer extends Component {
         fontSize:"18px",
         width:"100%",
         bottom:"0",
-        borderTop:"2px solid black"
+        borderTop:"2px solid black",
     }
 
     render() {

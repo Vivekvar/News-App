@@ -35,7 +35,7 @@ export class Navbar extends Component {
                         </li>
                     </ul>
                     <form className="form-inline my-2 my-lg-0">
-                        <input className="form-control mr-sm-2" type="search" value={this.props.searchQuery} onChange={e => this.props.handleOnChange(e.target.value)} placeholder="Search" aria-label="Search"/>
+                        <input className="form-control mr-sm-2" type="search" value={this.props.searchQuery} onChange={e => this.props.handleOnChange(e.target.value)} placeholder="Search News" aria-label="Search"/>
                     </form>
                 </div>
             </nav>
